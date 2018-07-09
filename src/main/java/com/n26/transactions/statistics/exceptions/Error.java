@@ -10,7 +10,7 @@
  * 1.0         11/07/2016     Ankur Malik         Baseline version.
  * -----------------------------------------------------------------------
  **********************************************************************************/
-package com.n26.transactions.statistics.Exceptions;
+package com.n26.transactions.statistics.exceptions;
 
 import com.fasterxml.jackson.annotation.*;
 import org.slf4j.Logger;
