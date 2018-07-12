@@ -106,3 +106,7 @@ but also listed here explicitly:
 #### Postman Scripts collection has also been added for both the interfaces at below location
 
     /src/test/resources/N26.postman_collection.json
+
+#### JMeter PT scripts
+
+    /src/test/resources/N26.jmx
