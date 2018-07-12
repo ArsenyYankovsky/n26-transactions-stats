@@ -30,7 +30,7 @@ public class TransactionsController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(TransactionsController.class);
 
-    @RequestMapping(method = POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = POST)
     @ApiOperation(value = "Create transactions records", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Record Created Successfully"),
