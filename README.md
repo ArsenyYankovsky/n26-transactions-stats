@@ -1,15 +1,4 @@
-# N26-TRANSACTIONS-STATISTICS
-
-<table>
-  <tr>
-    <th>Language</th>
-    <td>Java 8</th>
-  </tr>
-  <tr>
-    <th>Built on</td>
-    <td>SpringBoot 2.0.3 / Junit 4</td>
-  </tr>
-</table>
+# TRANSACTIONS-STATISTICS
 
 ## Code​ ​Challenge
 
@@ -58,9 +47,6 @@ It returns the statistic based on the transactions which happened in the last 60
 ```json
 {
     "sum": 1000,
-    "avg": 100,
-    "max": 200,
-    "min": 50,
     "count": 10
 }
 ```
@@ -68,9 +54,6 @@ It returns the statistic based on the transactions which happened in the last 60
 #### Where
 
     ● sum is a double specifying the total sum of transaction value in the last 60 seconds
-    ● avg is a double specifying the average amount of transaction value in the last 60 seconds
-    ● max is a double specifying single highest transaction value in the last 60 seconds
-    ● min is a double specifying single lowest transaction value in the last 60 seconds
     ● count is a long specifying the total number of transactions happened in the last 60 seconds
 
 #### Requirements
@@ -82,31 +65,9 @@ but also listed here explicitly:
 
     ● The API have to be threadsafe with concurrent requests
     ● The API have to function properly, with proper result
-    ● The project should be buildable, and tests should also complete successfully. e.g. If maven is used, then
-       mvn clean install should complete successfully.
+    ● The project should be buildable, and tests should also complete successfully. e.g. Please provide the instructions on how to run it.
     ● The API should be able to deal with time discrepancy, which means, at any point of time, we could receive a
        transaction which have a timestamp of the past
-    ● Make sure to send the case in memory solution without database (including in-memory database)
     ● Endpoints have to execute in constant time and memory (O(1))
 
-#### ● Please​ ​complete​ ​the​ ​challenge​ ​using​ ​Java
-
-#### Build
-
-    $ mvn clean install
-
-#### Run
-
-    $ mvn spring-boot:run
-
-#### Test
-
-    $ mvn clean test
-
-#### Postman Scripts collection has also been added for both the interfaces at below location
-
-    /src/test/resources/N26.postman_collection.json
-
-#### JMeter PT scripts
-
-    /src/test/resources/N26.jmx
+#### ● Please​ ​complete​ ​the​ ​challenge​ ​using​ ​Serverless and your favorite programming language
