@@ -66,8 +66,9 @@ but also listed here explicitly:
     ● The API have to be threadsafe with concurrent requests
     ● The API have to function properly, with proper result
     ● The project should be buildable, and tests should also complete successfully. e.g. Please provide the instructions on how to run it.
+    ● Make sure your solution stores data in-memory, without database
     ● The API should be able to deal with time discrepancy, which means, at any point of time, we could receive a
-       transaction which have a timestamp of the past
+       transaction which has a timestamp in the past
     ● Endpoints have to execute in constant time and memory (O(1))
 
-#### ● Please​ ​complete​ ​the​ ​challenge​ ​using​ ​Serverless and your favorite programming language
+#### ● Please​ ​complete​ ​the​ ​challenge​ ​using​ your favorite programming language and framework
