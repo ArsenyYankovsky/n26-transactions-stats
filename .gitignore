@@ -29,3 +29,5 @@ src/test/resources/*.txt
 **/Vagrant
 **/Vagrantfile
 **/docker-compose*.yml
+**mvnw
+**mvnw.cmd
