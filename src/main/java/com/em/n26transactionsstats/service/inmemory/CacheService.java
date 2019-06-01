@@ -52,9 +52,10 @@ class CacheService {
 		QuantumViseStat _quantumViseStat = quantumViseStat[_index];
 		if (_quantumViseStat == null) {
 			_quantumViseStat = new QuantumViseStat();
+			quantumViseStat[_index] = _quantumViseStat;
 		}
 		synchronized (_quantumViseStat) {
-			_quantumViseStat.add(txDTO);
+		_quantumViseStat.add(txDTO);
 		}
 
 	}
@@ -88,11 +89,15 @@ class CacheService {
 	 * @return
 	 */
 	public synchronized StatisticDTO getStatistics() {
-		final long _lowerBound = ZonedDateTime.now(ZoneOffset.UTC).minusSeconds(config.getReportSizeInSeconds())
-				.toEpochSecond();
+		final long _lowerBound = ZonedDateTime.now(ZoneOffset.UTC).toInstant().getEpochSecond() - (config.getReportSizeInSeconds());
 		StatisticDTO _returnDto = new StatisticDTO();
-		Arrays.stream(quantumViseStat).parallel().filter(e ->(e!=null && e.getTimeInseconds() > _lowerBound))
-				.forEach(e -> _returnDto.add(e));
+
+		 
+		Arrays.stream(quantumViseStat)
+				.parallel()
+				.filter(e -> (e != null && e.getTimeInseconds() >= _lowerBound)) //filter out all Quantumvise statistics which are in current report window
+				.forEach(e ->_returnDto.add(e)); //Add to the statistic dto
+
 		return _returnDto;
 	}
 }

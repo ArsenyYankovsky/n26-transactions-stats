@@ -20,10 +20,18 @@ public class InmemoryTxHandler extends AbstractTxHandler {
 	@Override
 	protected void acceptTx(final TransactionDTO txDto, final ZonedDateTime compairedWith) throws BusnessException {
 		if (!dateUtil.isInCurrentTimeWindow(cacheService.getCurrentDateTime(), compairedWith)) {
+//			synchronized(this)  {
+				cacheService.clearCache(compairedWith);
+//				cacheService.add(txDto);
+//			}
 			
-			cacheService.clearCache(compairedWith);
 		}
-		cacheService.add(txDto);
+//		else {
+//			synchronized(this)  {
+				cacheService.add(txDto);
+//			}
+//		}
+		
 
 	}
 }

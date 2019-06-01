@@ -12,8 +12,8 @@ public class TransactionDTO {
 
 	private double amount;
 
-	public ZonedDateTime getTimestamp() {
-		return timestamp;
+	public long getTimestamp() {
+		return timestamp.toInstant().toEpochMilli();
 	}
 
 	

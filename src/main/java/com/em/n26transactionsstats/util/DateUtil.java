@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,7 @@ import com.em.n26transactionsstats.model.domain.TransactionDTO;
  */
 @Component
 public class DateUtil {
-
+	protected  Logger LOGGER = LoggerFactory.getLogger(DateUtil.class);
 	@Autowired
 	protected ConfigReader configurations;
 
@@ -33,10 +35,8 @@ public class DateUtil {
 	 * @param txDTO
 	 * @return
 	 */
-	public boolean isTooOld(TransactionDTO txDTO, ZonedDateTime comparingDateTime) {
-
-		return Duration.between(txDTO.getTxTime(), comparingDateTime).getSeconds() > configurations
-				.getReportSizeInSeconds();
+	public boolean isTooOld(final TransactionDTO txDTO,final ZonedDateTime comparingDateTime) {
+		return Duration.between(txDTO.getTxTime(), comparingDateTime).toMillis() > (configurations.getReportSizeInSeconds()*1000);
 
 	}
 
@@ -56,7 +56,6 @@ public class DateUtil {
 	 * @return
 	 */
 	public boolean isInCurrentTimeWindow(final ZonedDateTime zonedDateTime, final ZonedDateTime createdDateTime) {
-		return Duration.between(createdDateTime, createdDateTime).getSeconds() > configurations
-				.getReportSizeInSeconds();
+		return Duration.between(zonedDateTime, createdDateTime).getSeconds() < configurations	.getReportSizeInSeconds();
 	}
 }

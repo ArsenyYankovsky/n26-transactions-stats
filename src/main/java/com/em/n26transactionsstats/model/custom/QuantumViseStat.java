@@ -19,7 +19,10 @@ public class QuantumViseStat {
 	}
 
 	public long getTimeInseconds() {
-		return createdDateTime.toEpochSecond();
+		return createdDateTime.toInstant().getEpochSecond();
+	}
+	public long getTimeInMillis() {
+		return createdDateTime.toInstant().toEpochMilli();
 	}
 
 	public void add(TransactionDTO txDTO) {

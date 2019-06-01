@@ -62,7 +62,7 @@ public class TransactionsController {
 
 	}
 
-	@RequestMapping(method = GET, value = "statistics", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = GET, value = "/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Produces statistics for all the transactions within 60 sec.", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 500, message = "Internal Server Error") })
