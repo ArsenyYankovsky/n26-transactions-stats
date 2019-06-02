@@ -83,22 +83,15 @@ class CacheService {
 	 * 
 	 * @return
 	 */
-	public synchronized StatisticDTO getStatistics() {
+	public  StatisticDTO getStatistics() {
 		final long _lowerBound = ZonedDateTime.now(ZoneOffset.UTC).toInstant().getEpochSecond()
 				- (config.getReportSizeInSeconds());
 		StatisticDTO _returnDto = new StatisticDTO();
-
-		Arrays.stream(quantumViseStat).parallel().filter(e -> (e != null && e.getTimeInseconds() >= _lowerBound)) // filter
-																													// out
-																													// all
-																													// Quantumvise
-																													// statistics
-																													// which
-																													// are
-																													// in
-																													// current
-																													// report
-																													// window
+		
+		/**
+		 * // filter out all Quantumvise  statistics which are in current report window
+		 */
+		Arrays.stream(quantumViseStat).parallel().filter(e -> (e != null && e.getTimeInseconds() >= _lowerBound)) 
 				.forEach(e -> _returnDto.add(e)); // Add to the statistic dto
 
 		return _returnDto;
