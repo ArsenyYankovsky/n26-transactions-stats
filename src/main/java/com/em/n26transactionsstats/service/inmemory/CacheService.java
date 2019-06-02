@@ -6,8 +6,6 @@ import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +18,6 @@ import com.em.n26transactionsstats.util.ErrorType;
 
 @Component
 class CacheService {
-	protected Logger LOGGER = LoggerFactory.getLogger(CacheService.class);
 	private ZonedDateTime currentDateTime = ZonedDateTime.now(ZoneOffset.UTC);
 	QuantumViseStat quantumViseStat[];
 	@Autowired
@@ -55,7 +52,7 @@ class CacheService {
 			quantumViseStat[_index] = _quantumViseStat;
 		}
 		synchronized (_quantumViseStat) {
-		_quantumViseStat.add(txDTO);
+			_quantumViseStat.add(txDTO);
 		}
 
 	}
@@ -70,14 +67,12 @@ class CacheService {
 	 */
 	public synchronized void clearCache(final ZonedDateTime newTimeWindow) {
 		final int _resetIndex = (int) (newTimeWindow.toEpochSecond() % config.getReportSizeInSeconds());
-		LOGGER.debug("cache clearing started from index :" + _resetIndex + " to 1");
 		for (int x = _resetIndex; x > 0; x--) {
 			QuantumViseStat quantumStat = quantumViseStat[x];
 			if (quantumStat != null) {
 				quantumStat.rest();
 			}
 		}
-		LOGGER.debug(" re set the cache time window from " + this.currentDateTime + " TO :" + newTimeWindow);
 		// re-set current time window with new time window
 		this.currentDateTime = newTimeWindow;
 
@@ -89,14 +84,22 @@ class CacheService {
 	 * @return
 	 */
 	public synchronized StatisticDTO getStatistics() {
-		final long _lowerBound = ZonedDateTime.now(ZoneOffset.UTC).toInstant().getEpochSecond() - (config.getReportSizeInSeconds());
+		final long _lowerBound = ZonedDateTime.now(ZoneOffset.UTC).toInstant().getEpochSecond()
+				- (config.getReportSizeInSeconds());
 		StatisticDTO _returnDto = new StatisticDTO();
 
-		 
-		Arrays.stream(quantumViseStat)
-				.parallel()
-				.filter(e -> (e != null && e.getTimeInseconds() >= _lowerBound)) //filter out all Quantumvise statistics which are in current report window
-				.forEach(e ->_returnDto.add(e)); //Add to the statistic dto
+		Arrays.stream(quantumViseStat).parallel().filter(e -> (e != null && e.getTimeInseconds() >= _lowerBound)) // filter
+																													// out
+																													// all
+																													// Quantumvise
+																													// statistics
+																													// which
+																													// are
+																													// in
+																													// current
+																													// report
+																													// window
+				.forEach(e -> _returnDto.add(e)); // Add to the statistic dto
 
 		return _returnDto;
 	}

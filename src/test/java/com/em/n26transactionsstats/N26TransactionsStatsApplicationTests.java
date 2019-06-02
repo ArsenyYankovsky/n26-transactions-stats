@@ -36,22 +36,17 @@ public class N26TransactionsStatsApplicationTests {
 	@Autowired
 	protected ConfigReader configurations;
 
-	 
 	@Test
-	@DirtiesContext
 	public void transaction_created_sucessfully() {
 		try {
 			TransactionDTO dto1 = getTxs();
 			mvc.perform(post("/transactions").contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsString(dto1))).andExpect(status().isOk());
 
-			
-			  mvc.perform(get("/statistics").contentType(MediaType.APPLICATION_JSON)).
-			  andExpect(status().isOk())
-			  .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-			  
-			  .andExpect(content().json(getStatisticsAsString(dto1)));
-			 
+			mvc.perform(get("/statistics").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+					.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+
+					.andExpect(content().json(getStatisticsAsString(dto1)));
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -59,8 +54,8 @@ public class N26TransactionsStatsApplicationTests {
 		}
 
 	}
+
 	@Test
-	@DirtiesContext
 	public void transaction_is_too_old() {
 
 		try {
@@ -75,8 +70,8 @@ public class N26TransactionsStatsApplicationTests {
 		}
 
 	}
+
 	@Test
-	@DirtiesContext
 	public void multiple_tx_in_same_time_window() {
 
 		try {
@@ -100,6 +95,7 @@ public class N26TransactionsStatsApplicationTests {
 		}
 
 	}
+
 	@Test
 	@DirtiesContext
 	public void multiple_tx_in_different_time_window() {
@@ -133,7 +129,6 @@ public class N26TransactionsStatsApplicationTests {
 	}
 
 	@Test
-	@DirtiesContext
 	public void only_tx_within_last_reporting_window() {
 
 		try {
@@ -141,7 +136,7 @@ public class N26TransactionsStatsApplicationTests {
 			mvc.perform(post("/transactions").contentType(MediaType.APPLICATION_JSON)
 					.content(objectMapper.writeValueAsString(dto1))).andExpect(status().isOk());
 
-			Thread.sleep((configurations.getReportSizeInSeconds() * 1000)+100);
+			Thread.sleep((configurations.getReportSizeInSeconds() * 1000) + 1000);
 
 			mvc.perform(get("/statistics").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 					.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -153,7 +148,7 @@ public class N26TransactionsStatsApplicationTests {
 		}
 
 	}
-	
+
 	public TransactionDTO getTxs() {
 
 		return getTxs(10);
@@ -182,11 +177,10 @@ public class N26TransactionsStatsApplicationTests {
 
 		return objectMapper.writeValueAsString(statisticDTO);
 	}
-	
+
 	public String getEmptyStatisticsAsString() throws JsonProcessingException {
 
 		StatisticDTO statisticDTO = new StatisticDTO();
- 
 
 		return objectMapper.writeValueAsString(statisticDTO);
 	}

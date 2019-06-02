@@ -19,7 +19,6 @@ import com.em.n26transactionsstats.model.domain.TransactionDTO;
  */
 @Component
 public class DateUtil {
-	protected  Logger LOGGER = LoggerFactory.getLogger(DateUtil.class);
 	@Autowired
 	protected ConfigReader configurations;
 
@@ -35,8 +34,9 @@ public class DateUtil {
 	 * @param txDTO
 	 * @return
 	 */
-	public boolean isTooOld(final TransactionDTO txDTO,final ZonedDateTime comparingDateTime) {
-		return Duration.between(txDTO.getTxTime(), comparingDateTime).toMillis() > (configurations.getReportSizeInSeconds()*1000);
+	public boolean isTooOld(final TransactionDTO txDTO, final ZonedDateTime comparingDateTime) {
+		return Duration.between(txDTO.getTxTime(), comparingDateTime)
+				.toMillis() > (configurations.getReportSizeInSeconds() * 1000);
 
 	}
 
@@ -56,6 +56,6 @@ public class DateUtil {
 	 * @return
 	 */
 	public boolean isInCurrentTimeWindow(final ZonedDateTime zonedDateTime, final ZonedDateTime createdDateTime) {
-		return Duration.between(zonedDateTime, createdDateTime).getSeconds() < configurations	.getReportSizeInSeconds();
+		return Duration.between(zonedDateTime, createdDateTime).getSeconds() < configurations.getReportSizeInSeconds();
 	}
 }

@@ -3,9 +3,6 @@ package com.em.n26transactionsstats.controller;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.em.n26transactionsstats.exception.BusnessException;
+import com.em.n26transactionsstats.model.domain.StatisticDTO;
 import com.em.n26transactionsstats.model.domain.TransactionDTO;
 import com.em.n26transactionsstats.service.StatisticService;
 import com.em.n26transactionsstats.service.TransactionsService;
@@ -37,8 +35,8 @@ public class TransactionsController {
 	private TransactionsService transactionsService;
 	@Autowired
 	private StatisticService statisticsService;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(TransactionsController.class);
+	// TODO:logger needs to handle from aspect
+	Logger LOGGER = LoggerFactory.getLogger(TransactionsController.class);
 
 	@RequestMapping(method = POST, value = "/transactions", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "Create transactions records", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,13 +44,12 @@ public class TransactionsController {
 			@ApiResponse(code = 204, message = "Transaction is older than 60 seconds") })
 	public ResponseEntity<String> createTransaction(@RequestBody @Valid TransactionDTO transactionsDto) {
 
-		LOGGER.info("Timestamp received is : " + transactionsDto);
-
 		try {
+			LOGGER.info("Trasaction received " + transactionsDto);
 			transactionsService.add(transactionsDto);
 			return ResponseEntity.ok("Record Created Successfully");
 		} catch (BusnessException e) {
-			LOGGER.error(e.toString());
+			LOGGER.error(e.getMessage());
 			HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 			if (e.getErrorType().equals(ErrorType.OLD_TX)) {
 				status = HttpStatus.NO_CONTENT;
@@ -67,10 +64,11 @@ public class TransactionsController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 500, message = "Internal Server Error") })
 	public @ResponseBody ResponseEntity<?> getStatistics() {
-		LOGGER.debug("Received a new request for latest statistics on : "
-				+ ZonedDateTime.now(ZoneOffset.UTC).toEpochSecond());
 		try {
-			return ResponseEntity.ok(statisticsService.getStatics());
+
+			StatisticDTO stat = statisticsService.getStatics();
+			LOGGER.info("Request  received " + stat);
+			return ResponseEntity.ok(stat);
 		} catch (BusnessException e) {
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getErrorType().toString(), e);
 		}

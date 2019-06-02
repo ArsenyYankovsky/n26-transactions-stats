@@ -26,7 +26,7 @@ public class QuantumViseStat {
 	}
 
 	public void add(TransactionDTO txDTO) {
-		LOGGER.debug("adding Tx :"+ txDTO + " to Quantum :" + this);
+	
 		this.count++;
 		this.sum += txDTO.getAmount();
 	}

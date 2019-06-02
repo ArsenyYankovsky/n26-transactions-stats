@@ -12,26 +12,26 @@ import com.em.n26transactionsstats.service.AbstractTxHandler;
 
 @Service
 public class InmemoryTxHandler extends AbstractTxHandler {
-	@Autowired
-	private CacheService cacheService;
 	{
 		LOGGER = LoggerFactory.getLogger(InmemoryTxHandler.class);
 	}
+	@Autowired
+	private CacheService cacheService;
+
 	@Override
 	protected void acceptTx(final TransactionDTO txDto, final ZonedDateTime compairedWith) throws BusnessException {
 		if (!dateUtil.isInCurrentTimeWindow(cacheService.getCurrentDateTime(), compairedWith)) {
 //			synchronized(this)  {
-				cacheService.clearCache(compairedWith);
+			cacheService.clearCache(compairedWith);
 //				cacheService.add(txDto);
 //			}
-			
+
 		}
 //		else {
 //			synchronized(this)  {
-				cacheService.add(txDto);
+		cacheService.add(txDto);
 //			}
 //		}
-		
 
 	}
 }
