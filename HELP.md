@@ -15,3 +15,5 @@ Please follow the instruction for build ,test,run
 
     $ mvn clean test
 
+#### Load Test
+	load test script is in src/test/loadtest/n26-transactions-stats.jmx. 
