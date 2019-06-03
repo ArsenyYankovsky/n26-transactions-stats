@@ -1,15 +1,17 @@
 # Getting Started
 
 ### Reference Documentation
-For further reference, please consider the following sections:
+Please follow the instruction for build ,test,run
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+#### Build
 
-### Guides
-The following guides illustrate how to use some features concretely:
+    $ mvn clean install
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
+#### Run
+
+    $ mvn spring-boot:run
+
+#### Test
+
+    $ mvn clean test
 
